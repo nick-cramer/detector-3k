@@ -9,24 +9,21 @@
 	<script>
 	// Update configuration to our liking
 	$(document).on("mobileinit", function(){
-		console.log("mobile init");		
-		alert("mobile init");		
+		console.log("mobile init");	
 		startWatchingLocation();
 	});
 	
 	$(document).ready(function() {
 		console.log("ready!");
-		alert("ready!");
 		startWatchingLocation();
 	});
 	
 	function startWatchingLocation() {
-	  alert("startWatchingLocation");
 	  if (navigator.geolocation) {
 		navigator.geolocation.watchPosition(showPosition, showError);
 	  } else {
 		console.log("no geolocation");
-		alert("no geolocation");
+		alert("Geolocation not available");
 	  }
 	}
 
