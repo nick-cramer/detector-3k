@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+    <title>My Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<script>
+	// Update configuration to our liking
+	$(document).bind("mobileinit", function(){
+		console.log("mobile init");
+	});
+	
+	$( document ).ready(function() {
+		console.log("ready!");
+		
+		$("#button").on("click",function(e){ 
+			console.log("button click!");
+		});
+		
+		startWatchingLocation();
+	});
+	
+	function startWatchingLocation() {
+	  if (navigator.geolocation) {
+		navigator.geolocation.watchPosition(showPosition, showError);
+	  } else {
+		console.log("no geolocation");
+	  }
+	}
+
+	function showPosition(position) {
+		console.log("Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude);
+		$("#location").text(position.coords.latitude.toFixed(4) + ", " + position.coords.longitude.toFixed(4));
+		$("#time").text((new Date(position.timestamp)).toLocaleTimeString());
+		$("#count").text(Math.floor(Math.random() * 101));
+		/*
+		coords.latitude	The latitude as a decimal number (always returned)
+		coords.longitude	The longitude as a decimal number (always returned)
+		coords.accuracy	The accuracy of position (always returned)
+		coords.altitude	The altitude in meters above the mean sea level (returned if available)
+		coords.altitudeAccuracy	The altitude accuracy of position (returned if available)
+		coords.heading	The heading as degrees clockwise from North (returned if available)
+		coords.speed	The speed in meters per second (returned if available)
+		timestamp	The date/time of the response (returned if available)
+	    */
+	}
+	
+	function showError(error) {
+	  switch(error.code) {
+		case error.PERMISSION_DENIED:
+		  console.log("User denied the request for Geolocation.");
+		  break;
+		case error.POSITION_UNAVAILABLE:
+		  console.log("Location information is unavailable.");
+		  break;
+		case error.TIMEOUT:
+		  console.log("The request to get user location timed out.");
+		  break;
+		case error.UNKNOWN_ERROR:
+		  console.log("An unknown error occurred.");
+		  break;
+	  }
+	}
+	</script>
+</head>
+<body>
+    <div data-role="page">
+ 
+        <div data-role="header">
+            <h1>Toy Detector 3000</h1>
+        </div><!-- /header -->
+ 
+        <div role="main" class="ui-content">
+		
+			<div style="margin: auto; width: 200px;"><img src="images/rad.png" width="200"/></div>
+			
+			<div style="font-size: 48pt; text-align: center; padding: 50px 10px 50px 10px;">
+			 <span style="font-weight: bold;" id="count">0</span> <span style="font-size: 24pt;">CPM</span>
+			</div>
+			
+			<div style="font-size: 16pt; text-align: center; padding: 20px 10px 30px 10px;" id="location">
+			 0, 0
+			</div>
+			
+			<div style="font-size: 24pt; text-align: center; padding: 20px 10px 30px 10px;" id="time">
+			00:00 PM
+			</div>
+			
+			<button class="ui-btn" id="button">Button</button>
+		
+		
+        </div><!-- /content -->
+ 
+        <div data-role="footer">
+            <h4></h4>
+        </div><!-- /footer -->
+ 
+    </div><!-- /page -->
+</body>
+</html>
